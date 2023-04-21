@@ -1,4 +1,4 @@
-# spack
+# Spack (ShipPack)
 the package manager of NerdOS!
 ## the bits
 
