@@ -9,7 +9,6 @@ def search_for_packages(args):
         print(Colours.BOLD + Colours.RED + "ERROR: No arguments specified for install. Quitting." + Colours.RESET)
     with urlopen("https://raw.githubusercontent.com/spartan-os/osp-packages/main/packages.json") as url:
         index = json.load(url)
-    print(index)
     category = package.split("/",1)[0]
     name = package.split("/",1)[1]
     try:

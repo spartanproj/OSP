@@ -10,7 +10,6 @@ import shutil
 def updateSpk(currentVersion):
     with urlopen("https://raw.githubusercontent.com/spartan-os/osp-packages/main/packages.json") as url:
         index = json.load(url)
-    print(index)
     latestVersion = index["spk"]["latest-version"]
     if currentVersion != latestVersion:
         getUpdate(latestVersion, index)
