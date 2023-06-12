@@ -6,7 +6,6 @@ import tempfile
 import platform
 from pathlib import Path
 import shutil
-import zipfile
 
 def updateSpk(currentVersion):
     with urlopen("https://raw.githubusercontent.com/spartan-os/osp-packages/main/packages.json") as url:
@@ -17,14 +16,14 @@ def updateSpk(currentVersion):
         getUpdate(latestVersion, index)
 
 
-# TODO Rename this here and in `updateSpk`
+
 def getUpdate(latestVersion, index):
     print(f"{Colours.BOLD}{Colours.BLUE}==>{Colours.RESET}{Colours.BOLD} Installing update to spk: {Colours.GREEN}v{latestVersion}{Colours.RESET}")
     temp_folder = Path("/tmp" if platform.system() == "Darwin" else tempfile.gettempdir())
-    zipFile = urlretrieve(index["spk"]["link-to-code"], "spk_update.zip")
-    shutil.move("spk_update.zip", temp_folder)
-    newPath = temp_folder.joinpath("spk_update.zip")
-    with zipfile.ZipFile(newPath, 'r') as zip_ref:
-        zip_ref.extractall(temp_folder)
-    newPath = temp_folder.joinpath("Spk-main")
+    shFile = urlretrieve(index["spk"]["link-to-script"], "spk_update.sh")
+    shutil.copy("spk_update.sh", temp_folder)
+    newPath = temp_folder.joinpath("spk_update.sh")
     
+    # Hand it over to install.sh
+    subprocess.run(["chmod", "+x", newPath.absolute()])
+    subprocess.run([newPath.absolute(), "-u"])
