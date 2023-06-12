@@ -11,3 +11,6 @@ class Colours:
     RESET= '\033[0m'
     BOLD = '\033[1m'
     # UNDERLINE = '\033[4m'
+
+if __name__ == "__main__":
+    print("This file is not meant to be ran! Run main.py")

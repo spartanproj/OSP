@@ -1,7 +1,7 @@
 # I need help!
 import sys
 
-def help(arg=""):
+def SpkHelp(arg=""):
     if arg == "":
         print("""
 Usage: osp [options] [path-to-os] [name]
@@ -14,10 +14,13 @@ Package manipulation:
   osp upgrade [PACKAGE]    Upgrade a package
 
 Debugging:
-  osp install --debug PACKAGE    Install a package with all the logs
+  osp install PACKAGE --debug    Install a package with all the logs
 
 Help:
   osp -h|--help    Displays this help menu
   https://github.com/spartan-nerdos/osp
               """)
         sys.exit()
+
+if __name__ == "__main__":
+    print("This file is not meant to be ran! Run main.py")
