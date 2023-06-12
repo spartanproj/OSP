@@ -4,7 +4,7 @@ from utils import Colours
 
 def install_package(script, name) -> int:
     print(f"{Colours.BOLD}{Colours.BLUE}==>{Colours.RESET}{Colours.BOLD} Installing {Colours.GREEN}{name}{Colours.RESET}")
-    subprocess.run(["curl", script], check=True)
+    subprocess.run(["curl", script])
     
     return 0
 

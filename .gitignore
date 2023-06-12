@@ -1,0 +1,8 @@
+.DS_Store
+src/__pycache__
+src/build
+main
+main.bin
+main.build
+main.dist
+main.onefile-build

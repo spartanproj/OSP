@@ -4,12 +4,17 @@ from utils import Colours
 import os
 import search
 import install
+import update
 
 args = sys.argv[1:] # find all arguments
 
-if os.name == 'nt' or args[0] == "42":
-    print(Colours.BOLD + Colours.RED + "ERROR: You are using Windows. OSP is not meant for Windows and will not work on Windows. Use " +Colours.GREEN+"mingw64" + Colours.RESET + Colours.BOLD + Colours.RED+" instead."+Colours.RESET)
+update.updateSpk("0.0.0")
 
+try:
+    if os.name == 'nt' or args[0] == "42":
+        print(Colours.BOLD + Colours.RED + "ERROR: You are using Windows. OSP is not meant for Windows and will not work on Windows. Use " +Colours.GREEN+"mingw64" + Colours.RESET + Colours.BOLD + Colours.RED+" instead."+Colours.RESET)
+except IndexError:
+    SpkHelp.SpkHelp()
 try:
     if args[0] in ["-h", "--help", ""]: # see if help is specified
         SpkHelp.SpkHelp() # call for help!

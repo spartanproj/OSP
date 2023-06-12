@@ -1,4 +1,5 @@
-import urllib, json
+import json
+from urllib.request import urlopen
 from utils import Colours
 
 def search_for_packages(args):
@@ -6,7 +7,7 @@ def search_for_packages(args):
         package = args[1]
     except IndexError:
         print(Colours.BOLD + Colours.RED + "ERROR: No arguments specified for install. Quitting." + Colours.RESET)
-    with urllib.request.urlopen("https://raw.githubusercontent.com/spartan-os/osp-packages/main/packages.json") as url:
+    with urlopen("https://raw.githubusercontent.com/spartan-os/osp-packages/main/packages.json") as url:
         index = json.load(url)
     print(index)
     category = package.split("/",1)[0]
