@@ -9,4 +9,5 @@ def install_package(script, name) -> int:
     return 0
 
 if __name__ == "__main__":
-    print("This file is not meant to be ran! Run main.py")
+    print("This file is not meant to be ran! Run main.py.")
+    print("To install spk, run install.sh")

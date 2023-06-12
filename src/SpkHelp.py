@@ -4,21 +4,24 @@ import sys
 def SpkHelp(arg=""):
     if arg == "":
         print("""
-Usage: osp [options] [path-to-os] [name]
+Usage: spk [options] [path-to-os] [name]
+
+Arguments:
+  spk -s|--shipment install|search|info|upgrade    Manipulate a shipment (group of packages)
 
 Package manipulation:
-  osp search TEXT    Searches for a package
-  osp info PACKAGE    Tells you some info about a package
-  osp install PACKAGE    Install a package
-  osp update    Update osp
-  osp upgrade [PACKAGE]    Upgrade a package
+  spk search TEXT    Searches for a package
+  spk info PACKAGE    Tells you some info about a package
+  spk install PACKAGE    Install a package
+  spk update    Update spk
+  spk upgrade [PACKAGE]    Upgrade a package
 
 Debugging:
-  osp install PACKAGE --debug    Install a package with all the logs
+  spk install PACKAGE --debug    Install a package with all the logs
 
 Help:
-  osp -h|--help    Displays this help menu
-  https://github.com/spartan-nerdos/osp
+  spk -h|--help    Displays this help menu
+  https://github.com/spartan-nerdos/spk
               """)
         sys.exit()
 
