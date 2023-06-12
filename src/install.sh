@@ -97,11 +97,11 @@ $PIP_INSTALLED install nuitka
 
 echo "${tty_bold}${tty_blue}==>${tty_reset}${tty_bold} Cloning git repository${tty_reset}"
 cd "$TEMPDIR" || exit
+rm -rf Spk > /dev/null
 git clone https://github.com/spartanproj/Spk
 cd Spk || exit
 echo "${tty_bold}${tty_blue}==>${tty_reset}${tty_bold} Building file${tty_reset}"
 $PY_INSTALLED -m nuitka --onefile src/main.py
-cd ..
 mv main.bin spk
 chmod +x main
 echo "${tty_bold}${tty_blue}==>${tty_reset}${tty_bold} Moving into /usr/local/bin${tty_reset}"
