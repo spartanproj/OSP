@@ -1,7 +1,6 @@
 import subprocess
 from utils import Colours
 
-# Main
 
 def install_package(script, name) -> int:
     print(f"{Colours.BOLD}{Colours.BLUE}==>{Colours.RESET}{Colours.BOLD} Installing {Colours.GREEN}{name}{Colours.RESET}")
