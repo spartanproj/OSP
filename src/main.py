@@ -24,3 +24,16 @@ except IndexError: # if no args are specified
 if args[0] == "install":
     package_info = search.search_for_packages(args)
     install.install_package(package_info["script"], args[1])
+elif args[0] == "info":
+    package_info = search.search_for_packages(args)
+    print(f"{Colours.BOLD}{Colours.GREEN}==> {Colours.RESET}{Colours.BOLD}{args[1]}{Colours.RESET}")
+    print(f"Version: v{package_info['version']}")
+    print(f"Author: {package_info['author']}")
+    print(f"Description: {package_info['description']}")
+    print(f"Link: {package_info['link']}")
+elif args[0] == "update":
+    status = update.updateosp()
+    if status[0] == 1:
+        print(f"{Colours.BOLD}You are on the latest version of OSP: {status[1]}")
+    else:
+        print(f"{Colours.BOLD}You have updated! New version: {status[1]}")
