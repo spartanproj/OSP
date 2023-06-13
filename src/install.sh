@@ -99,7 +99,7 @@ echo "${tty_bold}${tty_blue}==>${tty_reset}${tty_bold} Installing dependency nui
 $PIP_INSTALLED install nuitka
 
 echo "${tty_bold}${tty_blue}==>${tty_reset}${tty_bold} Cloning git repository${tty_reset}"
-cd "$TEMPDIR" || exit
+cd "$TMPDIR" || exit
 rm -rf Spk > /dev/null
 git clone https://github.com/spartanproj/Spk
 cd Spk || exit
