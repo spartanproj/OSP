@@ -56,20 +56,23 @@ then
     fi
 fi
 
-echo "${tty_bold}${tty_blue}==>${tty_reset}${tty_bold} This script will install:"
-echo "- nuitka to build the Python into a standalone executable"
-echo "- The downloaded script is located in your temp directory, it should be at $TEMPDIR."
-echo "- Will install the spk binary into /usr/bin"
-echo "${tty_bold}Python 2 is NOT SUPPORTED. Use Python 3 (ideally the latest version).${tty_reset}";
-echo
-echo "To continue, press ${tty_bold}RETURN/ENTER${tty_reset}. Press any other key to abort.";
-
-c="i want to get cancelled!!!!!";
-getc c;
-# we test for \r and \n because some stuff does \r instead
-if ! [[ "${c}" == $'\r' || "${c}" == $'\n' ]]
+if ! [[ $1 == "--suppress-confirmation" ]]
 then
-    exit 1
+    echo "${tty_bold}${tty_blue}==>${tty_reset}${tty_bold} This script will install:"
+    echo "- nuitka to build the Python into a standalone executable"
+    echo "- The downloaded script is located in your temp directory, it should be at $TEMPDIR."
+    echo "- Will install the spk binary into /usr/bin (/usr/local/bin on macOS)"
+    echo "${tty_bold}Python 2 is NOT SUPPORTED. Use Python 3 (ideally the latest version).${tty_reset}";
+    echo
+    echo "To continue, press ${tty_bold}RETURN/ENTER${tty_reset}. Press any other key to abort.";
+
+    c="i want to get cancelled!!!!!";
+    getc c;
+    # we test for \r and \n because some stuff does \r instead
+    if ! [[ "${c}" == $'\r' || "${c}" == $'\n' ]]
+    then
+        exit 1
+    fi
 fi
 
 PIP_INSTALLED="no"
@@ -104,8 +107,20 @@ echo "${tty_bold}${tty_blue}==>${tty_reset}${tty_bold} Building file${tty_reset}
 $PY_INSTALLED -m nuitka --onefile src/main.py
 mv main.bin spk
 chmod +x main
-echo "${tty_bold}${tty_blue}==>${tty_reset}${tty_bold} Moving into /usr/local/bin${tty_reset}"
-mv spk /usr/local/bin/spk
+echo "${tty_bold}${tty_blue}==>${tty_reset}${tty_bold} Moving the executable into your binaries folder${tty_reset}"
+
+case $(uname) in
+    Linux )
+        mv spk /usr/bin/spk
+        ;;
+    Darwin )
+        mv spk /usr/local/bin/spk
+        ;;
+  * )
+        # Handle AmigaOS, CPM, and modified cable modems.
+        mv spk /usr/bin/spk
+        ;;
+esac
 echo "${tty_bold}${tty_blue}==>${tty_reset}${tty_bold} Cleaning up${tty_reset}"
 rm -rf "$TEMPDIR/Spk"
 echo "Delete git repository"
