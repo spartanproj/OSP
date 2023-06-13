@@ -113,21 +113,21 @@ $PIP_INSTALLED install nuitka
 
 echo "${tty_bold}${tty_blue}==>${tty_reset}${tty_bold} Cloning git repository${tty_reset}"
 cd "$TMPDIR" || exit
-rm -rf Spk > /dev/null
-git clone https://github.com/spartanproj/Spk
+rm -rf OSP > /dev/null
+git clone https://github.com/spartanproj/OSP
 echo "${tty_bold}${tty_blue}==>${tty_reset}${tty_bold} Building file${tty_reset}"
 cd $PREFIX || return
 mkdir osp
 cd osp || return
 echo "${tty_bold}${tty_blue}==>${tty_reset}${tty_bold} Moving the executable into your binaries folder${tty_reset}"
-$PY_INSTALLED -m nuitka --standalone $TMPDIR/Spk/src/main.py
+$PY_INSTALLED -m nuitka --standalone $TMPDIR/OSP/src/main.py
 chmod +x $PREFIX/osp/main.dist/main.bin
 echo "alias osp='$PREFIX/osp/main.dist/main.bin'" >> ~/.bashrc
 echo "alias osp='$PREFIX/osp/main.dist/main.bin'" >> ~/.zshrc
 alias osp='$PREFIX/osp/main.dist/main.bin' # Add it into current terminal
 
 echo "${tty_bold}${tty_blue}==>${tty_reset}${tty_bold} Cleaning up${tty_reset}"
-rm -rf "$TEMPDIR/Spk"
+rm -rf "$TEMPDIR/OSP"
 echo "Delete git repository"
 echo "${tty_bold}Done!${tty_reset}"
 echo

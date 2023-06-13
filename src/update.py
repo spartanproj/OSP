@@ -7,12 +7,12 @@ import platform
 from pathlib import Path
 import shutil
 
-def updateSpk():
+def updateosp():
     
     # UPDATE: latest version
     currentVersion = "0.0.1"
     
-    with urlopen("https://raw.githubusercontent.com/spartan-os/osp-packages/main/packages.json") as url:
+    with urlopen("https://raw.githubusercontent.com/spartanproj/spk-packages/main/packages.json") as url:
         index = json.load(url)
     latestVersion = index["spk"]["latest-version"]
     if currentVersion != latestVersion:
