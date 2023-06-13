@@ -25,4 +25,4 @@ def getUpdate(latestVersion, index):
     
     # Hand it over to install.sh
     subprocess.run(["chmod", "+x", newPath.absolute()])
-    subprocess.run([newPath.absolute(), "-u"])
+    subprocess.run([newPath.absolute(), "--suppress-confirmation"])
