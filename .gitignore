@@ -8,3 +8,5 @@ main.dist
 main.onefile-build
 spk_update.sh
 Spk
+build
+dist
