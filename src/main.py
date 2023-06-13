@@ -8,7 +8,7 @@ import update
 
 args = sys.argv[1:] # find all arguments
 
-update.updateSpk("0.0.1")
+update.updateSpk()
 
 try:
     if os.name == 'nt' or args[0] == "42":
