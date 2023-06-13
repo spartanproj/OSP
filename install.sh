@@ -117,6 +117,7 @@ rm -rf OSP > /dev/null
 git clone https://github.com/spartanproj/OSP
 echo "${tty_bold}${tty_blue}==>${tty_reset}${tty_bold} Building file${tty_reset}"
 cd $PREFIX || return
+rm -rf osp
 mkdir osp
 cd osp || return
 echo "${tty_bold}${tty_blue}==>${tty_reset}${tty_bold} Moving the executable into your binaries folder${tty_reset}"
