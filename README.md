@@ -1,4 +1,4 @@
-# Spk (ShipPack)
+# OSP/ Spk (ShipPack)
 
 the package manager of NerdOS!
 
