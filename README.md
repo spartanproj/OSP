@@ -42,8 +42,8 @@ If you're planning to develop on OSP or scared that we'll install a virus or som
 
 ## Developer Notes
 
-See the wiki page.
+See [this page](https://github.com/spartanproj/OSP/wiki/Developer).
 
 ## User manual
 
-Use `osp -h` or consult the wiki.
+Use `osp -h` or consult the wiki [here](https://github.com/spartanproj/OSP/wiki/Manual).
