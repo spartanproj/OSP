@@ -4,20 +4,20 @@ import sys
 def ospHelp(arg=""):
     if arg == "":
         print("""
-Usage: osp [options] [path-to-os] [name]
+Usage: osp [options] [name] [path-to-os]
 
 Arguments:
-  osp -s|--shipment install|search|info|upgrade    Manipulate a shipment (group of packages)
+  osp -s|--shipment install|search|info|upgrade [/path/to/os]    Manipulate a shipment (group of packages)
 
 Package manipulation:
   osp search TEXT    Searches for a package
   osp info PACKAGE    Tells you some info about a package
-  osp install PACKAGE    Install a package
+  osp install PACKAGE /path/to/os    Install a package
   osp update    Update osp
   osp upgrade [PACKAGE]    Upgrade a package
 
 Debugging:
-  osp install PACKAGE --debug    Install a package with all the logs
+  osp install PACKAGE /path/to/os --debug    Install a package with all the logs
 
 Help:
   osp -h|--help    Displays this help menu

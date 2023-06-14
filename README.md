@@ -40,10 +40,6 @@ If you're planning to develop on OSP or scared that we'll install a virus or som
 
 4. Move the file(s) to your desired location.
 
-## Developer Notes
+## Developer Notes/Make a package/To-do list/Lorenzo's icons/User manual
 
-See [this page](https://github.com/spartanproj/OSP/wiki/Developer).
-
-## User manual
-
-Use `osp -h` or consult the wiki [here](https://github.com/spartanproj/OSP/wiki/Manual).
+See the wiki [here](https://github.com/spartanproj/OSP/wiki)!
