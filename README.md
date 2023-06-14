@@ -1,6 +1,6 @@
 # OSP
 
-The package manager for NerdOS.
+The pre-build package manager for NerdOS.
 
 *Note: this is currently a work in progress.*
 
