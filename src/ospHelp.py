@@ -1,6 +1,7 @@
 # I need help!
 import sys
 
+
 def ospHelp(arg=""):
     if arg == "":
         print("""
@@ -24,6 +25,7 @@ Help:
   https://github.com/spartan-nerdos/osp
               """)
         sys.exit()
+
 
 if __name__ == "__main__":
     print("This file is not meant to be ran! Run main.py")
