@@ -6,6 +6,7 @@ import tempfile
 import platform
 from pathlib import Path
 import shutil
+import platform
 
 def updateSpk(currentVersion):
     with urlopen("https://raw.githubusercontent.com/spartan-os/osp-packages/main/packages.json") as url:
