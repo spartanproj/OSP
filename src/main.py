@@ -26,7 +26,12 @@ except IndexError:  # if no args are specified
 
 if args[0] == "install":
     package_info = search.search_for_packages(args)
-    install.install_package(package_info["script"], args[1])
+    try:
+        idkwhythisisthevariablename = args[2]
+    except IndexError:
+        print(
+            Colours.BOLD + Colours.RED + "ERROR: Please make sure that you have specified the path to your BlueberryOS files." + Colours.RESET)
+    install.install_package(package_info, args[1], args[2])
 elif args[0] == "info":
     package_info = search.search_for_packages(args)
     print(f"{Colours.BOLD}{Colours.GREEN}==> {Colours.RESET}{Colours.BOLD}{args[1]}{Colours.RESET}")
