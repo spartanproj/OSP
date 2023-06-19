@@ -6,6 +6,7 @@ import tempfile
 import platform
 from pathlib import Path
 import shutil
+import platform
 
 
 def updateosp():
