@@ -56,20 +56,23 @@ then
     fi
 fi
 
-echo "${tty_bold}${tty_blue}==>${tty_reset}${tty_bold} This script will install:"
-echo "- nuitka to build the Python into a standalone executable"
-echo "- The downloaded script is located in your temp directory, it should be at $TEMPDIR."
-echo "- Will install the spk binary into /usr/bin"
-echo "${tty_bold}Python 2 is NOT SUPPORTED. Use Python 3 (ideally the latest version).${tty_reset}";
-echo
-echo "To continue, press ${tty_bold}RETURN/ENTER${tty_reset}. Press any other key to abort.";
-
-c="i want to get cancelled!!!!!";
-getc c;
-# we test for \r and \n because some stuff does \r instead
-if ! [[ "${c}" == $'\r' || "${c}" == $'\n' ]]
+if ! [[ $1 == "--suppress-confirmation" ]]
 then
-    exit 1
+    echo "${tty_bold}${tty_blue}==>${tty_reset}${tty_bold} This script will install:"
+    echo "- nuitka to build the Python into a standalone executable"
+    echo "- The downloaded script is located in your temp directory, it should be at $TEMPDIR."
+    echo "- Will install the osp binary into /usr/bin (/usr/local/bin on macOS)"
+    echo "${tty_bold}Python 2 is NOT SUPPORTED. Use Python 3 (ideally the latest version).${tty_reset}";
+    echo
+    echo "To continue, press ${tty_bold}RETURN/ENTER${tty_reset}. Press any other key to abort.";
+
+    c="i want to get cancelled!!!!!";
+    getc c;
+    # we test for \r and \n because some stuff does \r instead
+    if ! [[ "${c}" == $'\r' || "${c}" == $'\n' ]]
+    then
+        exit 1
+    fi
 fi
 
 PIP_INSTALLED="no"
@@ -92,21 +95,44 @@ then
     exit 1
 fi
 
+case $(uname) in
+    Linux )
+        PREFIX=/usr/bin
+        ;;
+    Darwin )
+        PREFIX=/usr/local/bin
+        ;;
+  * )
+        # Handle AmigaOS, CPM, and modified cable modems.
+        PREFIX=/usr/bin
+        ;;
+esac
+
 echo "${tty_bold}${tty_blue}==>${tty_reset}${tty_bold} Installing dependency nuitka${tty_reset}"
 $PIP_INSTALLED install nuitka
 
 echo "${tty_bold}${tty_blue}==>${tty_reset}${tty_bold} Cloning git repository${tty_reset}"
-cd "$TEMPDIR" || exit
-git clone https://github.com/spartanproj/Spk
-cd Spk || exit
+cd "$TMPDIR" || exit
+rm -rf OSP > /dev/null
+git clone https://github.com/spartanproj/OSP
 echo "${tty_bold}${tty_blue}==>${tty_reset}${tty_bold} Building file${tty_reset}"
-$PY_INSTALLED -m nuitka --onefile src/main.py
-cd ..
-mv main.bin spk
-chmod +x main
-echo "${tty_bold}${tty_blue}==>${tty_reset}${tty_bold} Moving into /usr/local/bin${tty_reset}"
-mv spk /usr/local/bin/spk
+cd $PREFIX || return
+rm -rf osp
+mkdir osp
+cd osp || return
+echo "${tty_bold}${tty_blue}==>${tty_reset}${tty_bold} Moving the executable into your binaries folder${tty_reset}"
+$PY_INSTALLED -m nuitka --standalone $TMPDIR/OSP/src/main.py
+chmod +x $PREFIX/osp/main.dist/main.bin
+echo "alias osp='$PREFIX/osp/main.dist/main.bin'" >> ~/.bashrc
+echo "alias osp='$PREFIX/osp/main.dist/main.bin'" >> ~/.zshrc
+alias osp='$PREFIX/osp/main.dist/main.bin' # Add it into current terminal
+
 echo "${tty_bold}${tty_blue}==>${tty_reset}${tty_bold} Cleaning up${tty_reset}"
-rm -rf "$TEMPDIR/Spk"
+rm -rf "$TEMPDIR/OSP"
 echo "Delete git repository"
 echo "${tty_bold}Done!${tty_reset}"
+echo
+echo "${tty_bold}To add osp to your PATH in terminals that are not zsh or bash, add this to your configuration:${tty_reset}"
+echo
+echo "${tty_bold}alias osp='$PREFIX/osp/main.dist/main.bin'${tty_reset}"
+echo

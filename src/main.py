@@ -1,5 +1,5 @@
 import sys
-import SpkHelp
+import ospHelp
 from utils import Colours
 import os
 import search
@@ -8,19 +8,32 @@ import update
 
 args = sys.argv[1:] # find all arguments
 
-update.updateSpk("0.0.1")
+update.updateosp()
 
 try:
     if os.name == 'nt' or args[0] == "42":
         print(Colours.BOLD + Colours.RED + "ERROR: You are using Windows. OSP is not meant for Windows and will not work on Windows. Use " +Colours.GREEN+"mingw64" + Colours.RESET + Colours.BOLD + Colours.RED+" instead."+Colours.RESET)
 except IndexError:
-    SpkHelp.SpkHelp()
+    ospHelp.ospHelp()
 try:
     if args[0] in ["-h", "--help", ""]: # see if help is specified
-        SpkHelp.SpkHelp() # call for help!
+        ospHelp.ospHelp() # call for help!
 except IndexError: # if no args are specified
-    SpkHelp.SpkHelp()
+    ospHelp.ospHelp()
 
 if args[0] == "install":
     package_info = search.search_for_packages(args)
     install.install_package(package_info["script"], args[1])
+elif args[0] == "info":
+    package_info = search.search_for_packages(args)
+    print(f"{Colours.BOLD}{Colours.GREEN}==> {Colours.RESET}{Colours.BOLD}{args[1]}{Colours.RESET}")
+    print(f"Version: v{package_info['version']}")
+    print(f"Author: {package_info['author']}")
+    print(f"Description: {package_info['description']}")
+    print(f"Link: {package_info['link']}")
+elif args[0] == "update":
+    status = update.updateosp()
+    if status[0] == 1:
+        print(f"{Colours.BOLD}You are on the latest version of OSP: {status[1]}")
+    else:
+        print(f"{Colours.BOLD}You have updated! New version: {status[1]}")
