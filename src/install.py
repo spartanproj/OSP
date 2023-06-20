@@ -6,6 +6,7 @@ import subprocess
 import tempfile
 from pathlib import Path
 import shutil
+import time
 import os
 
 
@@ -22,7 +23,7 @@ def install_package_deprecated(script, name) -> int:
     subprocess.run(["bash", newPath.absolute()])
     return 0
 
-def install_package(json, name, path) -> int:
+def install_package(json, name, path, timeStarted) -> int:
     print(f"{Colours.BOLD}{Colours.BLUE}==>{Colours.RESET}{Colours.BOLD} Installing {Colours.GREEN}{name}{Colours.RESET}")
     exe_name = list(json['exe']['name'])
     exe_letters = len(exe_name)
@@ -53,6 +54,9 @@ def install_package(json, name, path) -> int:
             f.seek(0)                 # file pointer locates at the beginning to write the whole file again
             f.writelines(content)
         modifyKernel(path, exe_letters, exe_name, json)
+    
+    timeTaken = round((time.perf_counter() - timeStarted) * 1000, 2)
+    print(f"{Colours.BOLD}Finished installing {name} at {path} (Took {timeTaken}ms)")
         
 
 # Random VSC extension did this
@@ -75,7 +79,6 @@ def modifyKernel(path, exe_letters, exe_name, json):
         command += "();\n\t\t\ttoclear=true;\n\t\t}\n\t\t"
         lines.insert(i, command)
         k.writelines(lines)
-        print(f"{Colours.BOLD}")
 
 if __name__ == "__main__":
     print("This file is not meant to be ran! Run main.py.")

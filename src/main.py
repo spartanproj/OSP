@@ -5,6 +5,7 @@ import os
 import search
 import install
 import update
+import time
 
 args = sys.argv[1:]  # find all arguments
 
@@ -32,7 +33,7 @@ if args[0] == "install":
         print(
             Colours.BOLD + Colours.RED + "ERROR: Please make sure that you have specified the path to your BlueberryOS files." + Colours.RESET)
         sys.exit()
-    install.install_package(package_info, args[1], args[2])
+    install.install_package(package_info, args[1], args[2], time.perf_counter())
 elif args[0] == "info":
     package_info = search.search_for_packages(args)
     print(f"{Colours.BOLD}{Colours.GREEN}==> {Colours.RESET}{Colours.BOLD}{args[1]}{Colours.RESET}")
