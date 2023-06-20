@@ -46,7 +46,10 @@ def install_package(json, name, path) -> int:
         f.seek(0, 0)
         for i,j in files.items():
             l = i.replace("kernel/", "")
-            content.insert(0, f'#include "{l}" // Extension: {json["exe"]["name"]}\n')
+            try:
+                p = content.index(f'#include "{l}" // Extension: {json["exe"]["name"]}\n')
+            except ValueError:
+                content.insert(0, f'#include "{l}" // Extension: {json["exe"]["name"]}\n')
             f.seek(0)                 # file pointer locates at the beginning to write the whole file again
             f.writelines(content)
         modifyKernel(path, exe_letters, exe_name, json)
@@ -56,20 +59,23 @@ def install_package(json, name, path) -> int:
 def modifyKernel(path, exe_letters, exe_name, json):
     with open(f"{path}/kernel/util/cmd.h","r+") as k:
         lines = k.readlines()
-    for i in range(len(lines)):
-        lines[i] = lines[i].replace("\t", "").replace("\n","")
-    print(lines)
-    i = lines.index("""if (typed[0]=="e" && typed[1]=="c" && typed[2]=="ENTER"){""") # find random command in kernel
-    command = 'else if ('
-    for j in range(exe_letters):
-        command += f"typed[{j}]=='{exe_name[j]}'"
-        if j != exe_letters-1:
-            command += " && "
-    command += ") { "
-    command += json['exe']['name']
-    command += "() }"
-    print(command)
-    lines.insert(i, command)
+        with open("lines.txt","w") as u:
+            lines1 = lines
+            for i in range(len(lines1)):
+                lines1[i].replace("\t", "=")
+            u.write(str(lines1))
+        i = lines.index("""\t\t if (typed[0]=="e" && typed[1]=="c" && typed[2]=="ENTER"){ \n""") # find random command in kernel
+        command = '\t\telse if ('
+        for j in range(exe_letters):
+            command += f"typed[{j}]=='{exe_name[j]}'"
+            if j != exe_letters-1:
+                command += " && "
+        command += ") "
+        command += json['exe']['name']
+        command += "();\n\t\t"
+        lines.insert(i, command)
+        k.writelines(lines)
+        print("done")
 
 if __name__ == "__main__":
     print("This file is not meant to be ran! Run main.py.")
