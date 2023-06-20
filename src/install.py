@@ -59,23 +59,23 @@ def install_package(json, name, path) -> int:
 def modifyKernel(path, exe_letters, exe_name, json):
     with open(f"{path}/kernel/util/cmd.h","r+") as k:
         lines = k.readlines()
-        with open("lines.txt","w") as u:
-            lines1 = lines
-            for i in range(len(lines1)):
-                lines1[i].replace("\t", "=")
-            u.write(str(lines1))
+    open(f"{path}/kernel/util/cmd.h", 'w').close()
+    with open(f"{path}/kernel/util/cmd.h","r+") as k:
         i = lines.index("""\t\t if (typed[0]=="e" && typed[1]=="c" && typed[2]=="ENTER"){ \n""") # find random command in kernel
         command = '\t\telse if ('
         for j in range(exe_letters):
-            command += f"typed[{j}]=='{exe_name[j]}'"
+            command += f'typed[{j}]=="{exe_name[j]}"'
             if j != exe_letters-1:
                 command += " && "
-        command += ") "
+            else:
+                o = j+1
+        command += f' && typed[{o}] == "ENTER") '
+        command += "{\n\t\t\t"
         command += json['exe']['name']
-        command += "();\n\t\t"
+        command += "();\n\t\t\ttoclear=true;\n\t\t}\n\t\t"
         lines.insert(i, command)
         k.writelines(lines)
-        print("done")
+        print(f"{Colours.BOLD}")
 
 if __name__ == "__main__":
     print("This file is not meant to be ran! Run main.py.")
