@@ -34,20 +34,30 @@ def install_package(json, name, path) -> int:
         fileName = i.split("/")[-1] # Find last value in list, therefore file name
         urlretrieve(j, fileName)
         p = f"{path}/kernel/packages"
+        print(p)
         subprocess.run(['mkdir', p])
         shutil.copy(fileName, f"{path}/kernel/packages/")
+        
 
     # Now inject commands into the kernel
-    with open(f"{path}/kernel/kernel.c", "a+") as k:
-        k.seek(0)
+    
+    with open(f"{path}/kernel/kernel.c", "r+") as f:
+        content = f.readlines()
+        f.seek(0, 0)
         for i,j in files.items():
-            l = j.replace("kernel/", "")
-            k.write("#include {l} // Extension: {exe_name}")
-        modifyKernel(k, exe_letters, exe_name, json)
+            l = i.replace("kernel/", "")
+            content.insert(0, f'#include "{l}" // Extension: {json["exe"]["name"]}\n')
+            f.seek(0)                 # file pointer locates at the beginning to write the whole file again
+            f.writelines(content)
+        modifyKernel(path, exe_letters, exe_name, json)
+        
 
 # Random VSC extension did this
-def modifyKernel(k, exe_letters, exe_name, json):
-    lines = k.readlines()
+def modifyKernel(path, exe_letters, exe_name, json):
+    with open(f"{path}/kernel/util/cmd.h","r+") as k:
+        lines = k.readlines()
+    for i in range(len(lines)):
+        lines[i] = lines[i].replace("\t", "").replace("\n","")
     print(lines)
     i = lines.index("""if (typed[0]=="e" && typed[1]=="c" && typed[2]=="ENTER"){""") # find random command in kernel
     command = 'else if ('

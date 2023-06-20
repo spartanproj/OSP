@@ -31,6 +31,7 @@ if args[0] == "install":
     except IndexError:
         print(
             Colours.BOLD + Colours.RED + "ERROR: Please make sure that you have specified the path to your BlueberryOS files." + Colours.RESET)
+        sys.exit()
     install.install_package(package_info, args[1], args[2])
 elif args[0] == "info":
     package_info = search.search_for_packages(args)
